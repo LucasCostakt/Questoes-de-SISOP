@@ -1,0 +1,7 @@
+A preempção é a capacidade de um sistema operacional interromper um processo em execução e substituí-lo por um outro.
+Escalonamento não preemptivos consiste em, se o processo submetido tiver prioridade maior que a do processo em execução, então 
+o processo com maior prioridade entra na ready-list e espera acabar a utilização da CPU pelo processo em execução, fazendo assim uma fila 
+de prioridades, há alguns tipos de algoritmos que consomem esse tipo de escalonamento. Dando um exemplo prático sobre isso, são máquinas 
+médicas que ao decorrer de sua operação não podem ser interrompidas, como um medidor constante de batimentos cardíacos, marca passo, 
+bombas de insulina ou morfina que caso tenham o processo encerrado ou substituido podem acarretar na morte do paciente, 
+sistemas de radares eletrônicos de carro, que monitoram constantemente a via, entre outras funções essenciais para nós.
