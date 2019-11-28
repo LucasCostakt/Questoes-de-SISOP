@@ -10,8 +10,6 @@
 #define REQ_QUEUE 	10010
 #define RESP_QUEUE 	10020
 
-#define TO_UPPERCASE 1
-#define TO_LOWERCASE 2
 
 #define MAX_TEXT_SIZE 	1000
 
