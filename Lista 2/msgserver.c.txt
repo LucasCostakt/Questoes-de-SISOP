@@ -1,0 +1,100 @@
+/***************************************************************
+*
+* Faça dois programas distintos para testar a comunicação por 
+* fila (queues): um programa cliente e um programa servidor. 
+* A comunicação entre os programas é feita por duas filas 
+* distintas, uma para envio de requisições (chave de 
+* identificação REQ_QUEUE) e a outra para respostas (chave 
+* de identificação RESP_QUEUE). O programa servidor é iniciado 
+* primeiro e espera pelas requisições enviadas em REQ_QUEUE
+*
+* Implementacao do Programa SERVIDOR
+*/
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/ipc.h> 
+#include <sys/msg.h> 
+#include <ctype.h>
+
+#define REQ_QUEUE 	10010
+#define RESP_QUEUE 	10020
+
+#define TO_UPPERCASE 1
+#define TO_LOWERCASE 2
+
+#define MAX_TEXT_SIZE 	1000
+
+struct reqmsg {
+	long	cli_id;
+    	int	conv_type;
+	char	textbuffer[MAX_TEXT_SIZE+1];
+};
+
+struct respmsg {
+	long	cli_id;
+    	char	textbuffer[MAX_TEXT_SIZE+1];
+};
+
+void stroupper(char * str) 
+{
+  	// Convert string to upper case
+  	while (*str) {
+    		*str = toupper((unsigned char) *str);
+    		str++;
+  	}
+
+}
+
+void strolower(char * str) 
+{
+  	// Convert string to upper case
+  	while (*str) {
+    		*str = tolower((unsigned char) *str);
+    		str++;
+  	}
+
+}
+
+void main()
+{
+	int req_mq;
+	int resp_mq;
+	struct reqmsg cli_reqmsg;
+	struct respmsg serv_respmsg;
+	
+	req_mq = msgget(REQ_QUEUE, IPC_CREAT | 0777);
+	if (req_mq == -1) {
+   		printf("msgget falhou no servidor\n"); 
+		exit(1); 
+	} 
+	resp_mq = msgget(RESP_QUEUE, IPC_CREAT | 0777);
+	if (resp_mq == -1) {
+   		printf("msgget falhou no servidor\n"); 
+		exit(1); 
+	} 
+	printf("servidor: iniciou execucao\n");
+	for (;;) {
+		// Espera pela requisicao de qualquer cliente (message type=0)
+		if (msgrcv(req_mq,&cli_reqmsg,sizeof(struct reqmsg),0,0)<0) {
+			printf("msgrcv falhou no servidor\n");
+			exit(1);
+		}
+		printf("servidor: recebeu requisicao do cliente %ld\n",cli_reqmsg.cli_id);
+		// Faz a conversao requerida
+		if (cli_reqmsg.conv_type==TO_UPPERCASE)
+			stroupper(cli_reqmsg.textbuffer);
+		else
+			strolower(cli_reqmsg.textbuffer);
+		// Copia o identificador do cliente para a mensagem de resposta
+		serv_respmsg.cli_id = cli_reqmsg.cli_id;
+		// Copia o buffer convertido para a mensagem de resposta
+		strcpy(serv_respmsg.textbuffer,cli_reqmsg.textbuffer);
+		// Envia a resposta ao cliente
+		msgsnd(resp_mq,&serv_respmsg,sizeof(struct respmsg),0);
+		printf("servidor: enviou resposta ao cliente %ld\n",serv_respmsg.cli_id);
+	}
+
+	exit(0);	
+}

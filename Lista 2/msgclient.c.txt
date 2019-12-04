@@ -1,0 +1,95 @@
+/***************************************************************
+*
+* Faça dois programas distintos para testar a comunicação por 
+* fila (queues): um programa cliente e um programa servidor. 
+* A comunicação entre os programas é feita por duas filas 
+* distintas, uma para envio de requisições (chave de 
+* identificação REQ_QUEUE) e a outra para respostas (chave 
+* de identificação RESP_QUEUE). O programa servidor é iniciado 
+* primeiro e espera pelas requisições enviadas em REQ_QUEUE
+*
+* Implementacao do Programa CLIENTE
+*/
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/ipc.h> 
+#include <sys/msg.h> 
+#include <unistd.h>
+
+
+#define REQ_QUEUE 	10010
+#define RESP_QUEUE 	10020
+
+#define TO_UPPERCASE 1
+#define TO_LOWERCASE 2
+
+#define MAX_TEXT_SIZE 	1000
+
+struct reqmsg {
+ 	long	cli_id;
+   	int	conv_type;
+	char	textbuffer[MAX_TEXT_SIZE+1];
+};
+
+struct respmsg {
+	long	cli_id;
+	char	textbuffer[MAX_TEXT_SIZE+1];
+};
+
+
+void main()
+{
+	int req_mq;
+	int resp_mq;
+	struct reqmsg cli_reqmsg;
+	struct respmsg serv_respmsg;
+	long cli_id;
+	int optconv;
+
+	cli_id = getpid();
+	req_mq = msgget(REQ_QUEUE, 0777);
+	if (req_mq == -1) {
+   		printf("msgget falhou no cliente\n"); 
+		exit(1); 
+	} 
+	resp_mq = msgget(RESP_QUEUE, 0777);
+	if (resp_mq == -1) {
+   		printf("msgget falhou no cliente\n"); 
+		exit(1); 
+	} 
+	do  	{
+		fflush(stdin);
+		fflush(stdout);
+		printf("Entre com o texto a ser convertido:\n");
+		scanf("%[^\n]s",cli_reqmsg.textbuffer);
+		printf("Qual opcao? 1 - Maiuscula; 2 - Minuscula; 9 - Finalizar programa\n");
+		scanf("%d",&optconv);
+		scanf("%*c");
+		cli_reqmsg.conv_type=TO_UPPERCASE;
+		if (optconv==1)
+			cli_reqmsg.conv_type=TO_UPPERCASE;
+		else if (optconv==2)
+			cli_reqmsg.conv_type=TO_LOWERCASE;
+		if (optconv!=9) {
+			// Preenche o tipo da mensagem com o identificador (PID) do cliente
+			cli_reqmsg.cli_id = cli_id;
+			// Envia requisicao ao servidor
+			msgsnd(req_mq,&cli_reqmsg,sizeof(struct reqmsg),0);
+			// Espera pela mensagem de resposta especifica para este cliente
+			// usando o PID do processo cliente como tipo de mensagem
+			if (msgrcv(resp_mq,&serv_respmsg,sizeof(struct respmsg),cli_id,0) < 0) {
+				printf("msgrcv falhou no cliente\n");
+				exit(1);
+			}
+			// Apresenta o texto convertido
+			printf("O texto convertido e':\n");
+			printf("%s\n",serv_respmsg.textbuffer);
+		}
+	} while(optconv!=9);
+			
+
+	exit(0);	
+}
