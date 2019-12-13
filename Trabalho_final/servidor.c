@@ -98,7 +98,7 @@ void *printMsg(struct reqmsg *cli_reqmsg) {
 			int i;for(i=0;i<10;i++){if(users[i]==cli_reqmsg->cli_id){users[i]=0;}	
 			}strcpy(cli_reqmsg->resposta_cli, "Cliente deslogado");kill(cli_reqmsg->id_pid, SIGINT);}
 		else if(strcmp(cli_reqmsg->comando,"help")==0||strcmp(cli_reqmsg->comando,"HELP")==0){ 
-			strcpy(cli_reqmsg->resposta_cli,"DIRLIST: Lista os diretórios\nMYID: Mostra seu ID\nGODIR: Vai para o diretório desejado\nRUN: Roda a aplicação\nEXIT: Faz o logoff\nMAIL: Envia a mensagem de e-mail\nSHOWMAIL: Mostra todas as mensagens de e-mails recebidas\nSEND: Envia uma mensagem direta ao usuário destino\nRECEIVE: Retira e mostra na tela uma mensagem (se houver) da fila de mensagens\nUSERS: Mostra na tela a lista de usuários correntemente logados no sistema\nCLEAR: Limpa a tela\n");}
+			strcpy(cli_reqmsg->resposta_cli,"DIRLIST: Lista os diretórios\nMYID: Mostra seu ID\nGODIR: Vai para o diretório desejado\nRUN: Roda a aplicação\nEXIT: Faz o logoff\nMAIL: Envia a mensagem de e-mail\nSHOWMAIL: Mostra todas as mensagens de e-mails recebidas\nSEND: Envia uma mensagem direta ao usuário destino\nRECEIVE: Retira e mostra na tela uma mensagem (se houver) da fila de mensagens\nUSERS: Mostra na tela a lista de usuários correntemente logados no sistema\n");}
 		else if(strcmp(cli_reqmsg->comando,"run")==0||strcmp(cli_reqmsg->comando,"RUN")==0){ 
 			char resp[MAX_TEXT_SIZE+1];
 			sprintf(resp, " gnome-terminal -e ./%s", newString[1]);
