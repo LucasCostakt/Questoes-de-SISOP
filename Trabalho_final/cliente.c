@@ -100,9 +100,9 @@ void main(){
        	scanf("%*c");
 		
 		if(strcmp(cli_reqmsg.comando,"showmail")==0||(cli_reqmsg.comando,"SHOWMAIL")==0){
-		while(1){msgsnd(req_mq,&cli_reqmsg,sizeof(struct reqmsg),0);{if(msgrcv(resp_mq,&serv_respmsg,sizeof(struct respmsg),cli_id,0) < 0){
+		while(1){msgsnd(req_mq,&cli_reqmsg,sizeof(struct reqmsg),0);if(msgrcv(resp_mq,&serv_respmsg,sizeof(struct respmsg),cli_id,0) < 0){
 		printf("msgrcv falhou no cliente\n");exit(1);}if(strcmp(serv_respmsg.resposta, "")!=0){printf("%s\n", serv_respmsg.resposta);
-		}else{printf("Acabou as mensagens.... \n");break;}}}}	
+		}else{printf("Acabou as mensagens.... \n");break;}}}	
 	    
 		cli_reqmsg.id_pid = pid_id;
 		strcpy(&cli_reqmsg.remetente,init);
