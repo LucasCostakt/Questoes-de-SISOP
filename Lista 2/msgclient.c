@@ -1,16 +1,3 @@
-/***************************************************************
-*
-* Faça dois programas distintos para testar a comunicação por 
-* fila (queues): um programa cliente e um programa servidor. 
-* A comunicação entre os programas é feita por duas filas 
-* distintas, uma para envio de requisições (chave de 
-* identificação REQ_QUEUE) e a outra para respostas (chave 
-* de identificação RESP_QUEUE). O programa servidor é iniciado 
-* primeiro e espera pelas requisições enviadas em REQ_QUEUE
-*
-* Implementacao do Programa CLIENTE
-*/
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -74,17 +61,16 @@ void main()
 		else if (optconv==2)
 			cli_reqmsg.conv_type=TO_LOWERCASE;
 		if (optconv!=9) {
-			// Preenche o tipo da mensagem com o identificador (PID) do cliente
+			
 			cli_reqmsg.cli_id = cli_id;
-			// Envia requisicao ao servidor
+		
 			msgsnd(req_mq,&cli_reqmsg,sizeof(struct reqmsg),0);
-			// Espera pela mensagem de resposta especifica para este cliente
-			// usando o PID do processo cliente como tipo de mensagem
+	
 			if (msgrcv(resp_mq,&serv_respmsg,sizeof(struct respmsg),cli_id,0) < 0) {
 				printf("msgrcv falhou no cliente\n");
 				exit(1);
 			}
-			// Apresenta o texto convertido
+
 			printf("O texto convertido e':\n");
 			printf("%s\n",serv_respmsg.textbuffer);
 		}

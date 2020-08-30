@@ -8,13 +8,12 @@
 #include <signal.h>
 void main()
 {
-	/* Convert integer to string */
 	int n=234;
 	char buffer[100];
 
 	sprintf(buffer, "%d", n);
 
-	printf("O numero convertido para string e': %s\n", buffer);
+	printf("O numero convertido para string': %s\n", buffer);
 	
 
 }

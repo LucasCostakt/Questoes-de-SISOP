@@ -5,8 +5,8 @@
 #include <sys/ipc.h> 
 #include <sys/msg.h> 
 
-key_t key; /* key to be passed to msgget() */ 
-int mqid; /* return value from msgget() */ 
+key_t key; 
+int mqid;
 
 #define EXTERNAL_MQ_ID 10002
 
@@ -21,6 +21,6 @@ void main()
 	} 
 	printf("msgget OK, retornou id: %d\n", mqid);
 	msgctl(mqid,IPC_RMID,NULL);
-	printf("executou msgctl OK, acho que a fila de mensagens foi deletada\n");
+	printf("executou msgctl a fila de mensagens foi deletada\n");
 	exit(0);	
 }

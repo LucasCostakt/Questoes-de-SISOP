@@ -1,15 +1,3 @@
-/***************************************************************
-*
-* Faça dois programas distintos para testar a comunicação por 
-* fila (queues): um programa cliente e um programa servidor. 
-* A comunicação entre os programas é feita por duas filas 
-* distintas, uma para envio de requisições (chave de 
-* identificação REQ_QUEUE) e a outra para respostas (chave 
-* de identificação RESP_QUEUE). O programa servidor é iniciado 
-* primeiro e espera pelas requisições enviadas em REQ_QUEUE
-*
-* Implementacao do Programa SERVIDOR
-*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -39,7 +27,7 @@ struct respmsg {
 
 void stroupper(char * str) 
 {
-  	// Convert string to upper case
+  
   	while (*str) {
     		*str = toupper((unsigned char) *str);
     		str++;
@@ -49,7 +37,7 @@ void stroupper(char * str)
 
 void strolower(char * str) 
 {
-  	// Convert string to upper case
+  	
   	while (*str) {
     		*str = tolower((unsigned char) *str);
     		str++;
@@ -76,22 +64,22 @@ void main()
 	} 
 	printf("servidor: iniciou execucao\n");
 	for (;;) {
-		// Espera pela requisicao de qualquer cliente (message type=0)
+		
 		if (msgrcv(req_mq,&cli_reqmsg,sizeof(struct reqmsg),0,0)<0) {
 			printf("msgrcv falhou no servidor\n");
 			exit(1);
 		}
 		printf("servidor: recebeu requisicao do cliente %ld\n",cli_reqmsg.cli_id);
-		// Faz a conversao requerida
+		
 		if (cli_reqmsg.conv_type==TO_UPPERCASE)
 			stroupper(cli_reqmsg.textbuffer);
 		else
 			strolower(cli_reqmsg.textbuffer);
-		// Copia o identificador do cliente para a mensagem de resposta
+		
 		serv_respmsg.cli_id = cli_reqmsg.cli_id;
-		// Copia o buffer convertido para a mensagem de resposta
+		
 		strcpy(serv_respmsg.textbuffer,cli_reqmsg.textbuffer);
-		// Envia a resposta ao cliente
+	
 		msgsnd(resp_mq,&serv_respmsg,sizeof(struct respmsg),0);
 		printf("servidor: enviou resposta ao cliente %ld\n",serv_respmsg.cli_id);
 	}

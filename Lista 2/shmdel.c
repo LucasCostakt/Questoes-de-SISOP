@@ -5,8 +5,8 @@
 #include <sys/ipc.h> 
 #include <sys/shm.h> 
 
-key_t key; /* key to be passed to shmget() */ 
-int shmid; /* return value from shmget() */ 
+key_t key; 
+int shmid; 
 
 #define EXTERNAL_SHM_ID 10001
 #define SHM_SIZE 100
@@ -21,8 +21,8 @@ void main()
    		perror("shmget falhou"); 
 		exit(1); 
 	} 
-	printf("shmget OK, retornou id: %d\n", shmid);
+	printf("shmget retornou id: %d\n", shmid);
 	shmctl(shmid,IPC_RMID,NULL);
-	printf("executou shmctl OK, acho que o segmento de memoria compartilhada foi deletado\n");
+	printf("executou shmctl segmento de memoria compartilhada foi deletado\n");
 	exit(0);	
 }

@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>           /* For O_* constants */
+#include <fcntl.h>          
 #include <sys/types.h>
-#include <sys/stat.h>        /* For mode constants */
+#include <sys/stat.h>        
 #include <semaphore.h>
 
 
@@ -11,12 +11,12 @@ int main()
 {
 	sem_t *pnewsem;
 	
-	pnewsem = sem_open("/meu_querido_semaforo",O_CREAT,0777,10);
+	pnewsem = sem_open("/meu_semaforo",O_CREAT,0777,10);
 	if (pnewsem == SEM_FAILED) {
-   		printf("sem_open falhou\n"); 
+   		printf("semaforo open falhou\n"); 
 		exit(1); 
 	} 
-	printf("sem_open OK, semaforo criado\n");
+	printf("semaforo criado\n");
 	printf("vai fechar o semaforo\n");
 
 	sem_close(pnewsem);

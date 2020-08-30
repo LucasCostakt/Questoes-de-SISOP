@@ -17,6 +17,7 @@ encerrado”. Cada um dos processos filhos imprime uma mensagem “Processo FILH
 onde N é o número do processo filho, depois dorme por N*10 segundos e imprime “Processo
 FILHO N encerrado”. Porém nessa implementação deve ser usado o seguinte trecho de código,
 que se situa antes da rotina main():
+```c
 int nfilho;
 void proc_filho()
 {
@@ -25,6 +26,7 @@ printf("Vair dormir por %d segundos\n",nfilho*10);
 sleep(nfilho*10);
 printf("Processo FILHO %d encerrado\n",nfilho);
 }
+```
 Somente a rotina proc_filho() definida acima deve ser executada no código fonte de cada processo
 filho. O valor da variável global nfilho deve ser atribuído de forma apropriada pelo processo PAI,
 para garantir que cada processo filho imprima a informação correta sobre seu número do processo

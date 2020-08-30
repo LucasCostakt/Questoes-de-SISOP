@@ -5,8 +5,8 @@
 #include <sys/ipc.h> 
 #include <sys/msg.h> 
 
-key_t key; /* key to be passed to msgget() */ 
-int mqid; /* return value from msgget() */ 
+key_t key; 
+int mqid; 
 
 #define EXTERNAL_MQ_ID 10002
 

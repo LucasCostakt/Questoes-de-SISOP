@@ -47,7 +47,7 @@ void main()
 	pid = fork();
 	if (pid>0) {
 	// The FATHER PROCESS ... continues to use pmyshm without problem
-		strcpy(pmyshm->buffer1,"Hello my son!\n");
+		strcpy(pmyshm->buffer1,"Oi filho!\n");
 		pmyshm->control_flag1=1;
 		while(pmyshm->control_flag2==0);
 		puts(pmyshm->buffer1);
@@ -63,8 +63,8 @@ void main()
 			exit(1); 
 		}
 		while(pmyshm->control_flag1==0);
-		printf("DEBUG MSG: gracas a deus funcionou uhuhuhu!! o proc pai escreve na flag direitinho!\n");
-		strcpy(pmyshm->buffer2,"Aye my father!\n");
+		printf("o proc pai escreve na flag \n");
+		strcpy(pmyshm->buffer2,"meu pai!\n");
 		pmyshm->control_flag2 = 1;
 		shmdt(pmyshm);
 	}

@@ -5,8 +5,8 @@
 #include <sys/ipc.h> 
 #include <sys/msg.h> 
 
-key_t key; /* key to be passed to msgget() */ 
-int mqid; /* return value from msgget() */ 
+key_t key; 
+int mqid; 
 
 #define EXTERNAL_MQ_ID 10002
 
@@ -28,7 +28,7 @@ void main()
 	strcpy(msgbuf,"Esta e' a primeira mensagem a ser enviada\n");
 	msgsnd(mqid,msgbuf,strlen(msgbuf)+1,0);
 
-	strcpy(msgbuf,"Ja' esta e' a segunda mensagem que sera' enviada\n");
+	strcpy(msgbuf,"'esta e' a segunda mensagem que sera' enviada\n");
 	msgsnd(mqid,msgbuf,strlen(msgbuf)+1,0);
 
 	exit(0);	

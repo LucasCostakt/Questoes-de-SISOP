@@ -4,15 +4,15 @@
 #include <sys/types.h>
 #include <sys/ipc.h> 
 #include <sys/msg.h> 
-#include <fcntl.h>           /* For O_* constants */
-#include <sys/stat.h>        /* For mode constants */
+#include <fcntl.h>           
+#include <sys/stat.h>        
 #include <semaphore.h>
 
 
 int main()
 {
-	if (sem_unlink("/meu_querido_semaforo")==-1) {
-		printf("sem_unlink falhou\n"); 
+	if (sem_unlink("/meu_semaforo")==-1) {
+		printf("semaforo unlink falhou\n"); 
 		exit(1); 
 	} 
 	printf("deletou (unlink) o semaforo\n");

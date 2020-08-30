@@ -13,15 +13,19 @@ void main()
  	char txt_child[100]; 
 	pipe(pdes);
 	pid = fork();
-	if ( pid>0 ) { /* parent process - producer */
+		//Processo pai produtor 
+	if ( pid>0 ) { 
 		close(pdes[0]); 
-		strcpy(txt_parent,"olah tudo bem?\n");
-		write( pdes[1], txt_parent, 100); /* write to child */
+		strcpy(txt_parent,"olá\n");
+		// Escreve no filho 
+		write( pdes[1], txt_parent, 100); 
 		wait(NULL);
 		close(pdes[1]);
-	} else if (pid==0) {/* child process - consumer */ 		
+		// Processo filho consumidor  		
+	} else if (pid==0) {
 		close(pdes[1]); 
-		read( pdes[0], txt_child, 100); /* read from parent */
+		// le no pai 
+		read( pdes[0], txt_child, 100); 
 		printf("O filho leu:\n");
 		printf("%s",txt_child);
 		close(pdes[0]);

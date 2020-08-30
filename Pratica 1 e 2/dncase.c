@@ -4,11 +4,11 @@
 #include <unistd.h>
 #include <ctype.h>
 
-void stroupper(char * str) 
+void strolower(char * str) 
 {
-  	// Convert string to upper case
+  	
   	while (*str) {
-    		*str = toupper((unsigned char) *str);
+    		*str = tolower((unsigned char) *str);
     		str++;
   	}
 
@@ -18,7 +18,7 @@ int main ()
 	char texto[1024];
 
 	gets(texto);
-	stroupper(texto);
+	strolower(texto);
 	puts(texto);
 }
 

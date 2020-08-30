@@ -7,7 +7,7 @@ void main()
 {
 char dado[1024];
 unsigned long n;
-printf("Programa de Geracao de Naturais\n");
+printf("Geracao de numeros Naturais\n");
 n=0;
 for (;;) {
 	printf("%lu\n",n);

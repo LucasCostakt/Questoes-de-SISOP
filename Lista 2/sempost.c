@@ -4,8 +4,8 @@
 #include <sys/types.h>
 #include <sys/ipc.h> 
 #include <sys/msg.h> 
-#include <fcntl.h>           /* For O_* constants */
-#include <sys/stat.h>        /* For mode constants */
+#include <fcntl.h>           
+#include <sys/stat.h>        
 #include <semaphore.h>
 
 
@@ -14,14 +14,14 @@ int main()
 	sem_t *pnewsem;
 	int n;
 	
-	pnewsem = sem_open("/meu_querido_semaforo",0);
+	pnewsem = sem_open("/meu_semaforo",0);
 	if (pnewsem == SEM_FAILED) {
-   		printf("sem_open falhou\n"); 
+   		printf("semaforo open falhou\n"); 
 		exit(1); 
 	} 
-	printf("sem_open OK, obteve acesso ao semaforo\n");
+	printf("obteve acesso ao semaforo\n");
 
-	/* Apenas faz um post no semaforo */
+	
 	sem_post(pnewsem);
 	sem_close(pnewsem);
 

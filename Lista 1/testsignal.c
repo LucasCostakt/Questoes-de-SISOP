@@ -15,19 +15,18 @@ void main()
 {
 	signal(SIGINT, sigproc);
 	signal(SIGQUIT, quitproc);
-	printf("ctrl-c disabled use ctrl-\\ to quit\n");
-	for(;;); /* infinite loop */
+	printf("ctrl-c desabilitado use ctrl-\\ para sair\n");
+	for(;;);
 }
  
 void sigproc(int signum)
 { 		 
-	signal(SIGINT, sigproc); /* NOTE some versions of UNIX will reset signal to default
-		 		after each call. So for portability reset signal each time */
- 	printf("you have pressed ctrl-c \n");
+	signal(SIGINT, sigproc); 
+ 	printf("voce usou o ctrl-c \n");
 }
  
 void quitproc(int signum)
 { 		 
-	printf("ctrl-\\ pressed to quit\n");
-	exit(0); /* normal exit status */
+	printf("ctrl-\\ use para sair\n");
+	exit(0); 
 }
